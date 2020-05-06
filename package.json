@@ -2,6 +2,8 @@
   "name": "contact-api-node",
   "version": "1.0.0",
   "main": "index.js",
+  "repository": "git@github.com:marcosni1108/contact-api-node.git",
+  "author": "Marcos Silva <marcos.silva@vstsalelo.onmicrosoft.com>",
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js"
