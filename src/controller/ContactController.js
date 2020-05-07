@@ -6,11 +6,35 @@ module.exports = {
         return res.json(await Contact.findAll());
     },
 
-    async store(req, res) {
-        const { name, email, phone } = req.body;
+    async getContactById(req, res) {
+        return res.json(await Contact.findByPk(req.params.id));
+    },
 
-        const contact = await Contact.create({ name, email, phone });
+    async createContact(req, res) {
+        return res.json(await Contact.create(req.body));
+    },
 
-        return res.json(contact);
-    }
+    async updateContactById(req, res) {
+        //Ver como melhorar isso...
+        Contact.findByPk(req.params.id).then((contact) => {
+            if (!contact) {
+                console.log('Contact not found');
+                throw res.status(204).send('Something broke!');
+            }
+            return contact.update(req.body);
+        }).then((contact) => {
+            res.json(contact);
+        });
+
+    },
+
+    async deleteContactById(req, res) {
+        if (!await Contact.findByPk(req.params.id)) {
+            return res.status(204).json({ error: 'Contact not found' });
+        }
+
+        await Contact.destroy({ where: { id: req.params.id } });
+
+        return res.status(200).json();
+    },
 };
